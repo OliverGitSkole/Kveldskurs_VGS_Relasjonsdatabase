@@ -13,6 +13,21 @@ app.use(express.urlencoded({ extended: false }));
 const db = dbService.getInstance();
 
 // Test Query Endpoint
+app.get('/getSome', async (request, response) => {
+    try {
+        const sql = 'SELECT * FROM People';
+        const query = await db.initiateQuery(sql, []);
+        response.json(query);
+        console.log(query);
+    } catch (err) {
+        console.error('Query Error:', err.message);
+        response.status(500).json({ error: 'Database query failed' });
+    }
+});
+
+
+// Create
+
 app.get('/getAll', async (request, response) => {
     try {
         const sql = 'SELECT * FROM People';
@@ -24,6 +39,17 @@ app.get('/getAll', async (request, response) => {
         response.status(500).json({ error: 'Database query failed' });
     }
 });
+
+
+// Read
+
+
+// Update
+
+
+// Delete
+
+
 
 // Start Express Server
 app.listen(process.env.PORT, () => console.log('Server running on port', process.env.PORT));
