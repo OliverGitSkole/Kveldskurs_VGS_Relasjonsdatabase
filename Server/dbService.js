@@ -1,41 +1,122 @@
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
+let instance = null;
 dotenv.config();
 
-class dbService {
-    constructor() {
-        this.connection = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            port: process.env.DB_PORT
-        });
+const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
+});
 
-        this.connection.connect((err) => {
-            if (err) {
-                console.error('Database connection error:', err.message);
-            } else {
-                console.log('Database connected successfully');
-            }
-        });
+connection.connect((err) => {
+    if (err) {
+        console.log(err.message);
+    }
+    // console.log('db ' + connection.state);
+});
+
+
+class DbService {
+    static getDbServiceInstance() {
+        return instance ? instance : new DbService();
     }
 
-    static getInstance() {
-        if (!dbService.instance) {
-            dbService.instance = new dbService();
-        }
-        return dbService.instance;
-    }
+    async getAllData() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM names;";
 
-    initiateQuery(sql, values) {
-        return new Promise((resolve, reject) => {
-            this.connection.query(sql, values, (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
+                connection.query(query, (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
             });
-        });
+            // console.log(response);
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    async insertNewName(name) {
+        try {
+            const dateAdded = new Date();
+            const insertId = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
+
+                connection.query(query, [name, dateAdded] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.insertId);
+                })
+            });
+            return {
+                id : insertId,
+                name : name,
+                dateAdded : dateAdded
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async deleteRowById(id) {
+        try {
+            id = parseInt(id, 10); 
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM names WHERE id = ?";
+    
+                connection.query(query, [id] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+    
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async updateNameById(id, name) {
+        try {
+            id = parseInt(id, 10); 
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE names SET name = ? WHERE id = ?";
+    
+                connection.query(query, [name, id] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+    
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async searchByName(name) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM names WHERE name = ?;";
+
+                connection.query(query, [name], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
-module.exports = dbService;
+module.exports = DbService;

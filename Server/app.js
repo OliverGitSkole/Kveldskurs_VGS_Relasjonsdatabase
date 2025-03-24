@@ -4,52 +4,69 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const dbService = require('./dbService.js'); // importerer dbService
+const dbService = require('./dbService');
+
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended : false }));
 
-// Instantiate the DB Service
-const db = dbService.getInstance();
 
-// Test Query Endpoint
-app.get('/getSome', async (request, response) => {
-    try {
-        const sql = 'SELECT * FROM People';
-        const query = await db.initiateQuery(sql, []);
-        response.json(query);
-        console.log(query);
-    } catch (err) {
-        console.error('Query Error:', err.message);
-        response.status(500).json({ error: 'Database query failed' });
-    }
+// create
+app.post('/insert', (request, response) => {
+    const { name } = request.body;
+    const db = dbService.getDbServiceInstance();
+    
+    const result = db.insertNewName(name);
+
+    result
+    .then(data => response.json({ data: data}))
+    .catch(err => console.log(err));
 });
 
+// read
+app.get('/getAll', (request, response) => {
+    const db = dbService.getDbServiceInstance();
 
-// Create
+    const result = db.getAllData();
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
 
-app.get('/getAll', async (request, response) => {
-    try {
-        const sql = 'SELECT * FROM People';
-        const query = await db.initiateQuery(sql, []);
-        response.json(query);
-        console.log(query);
-    } catch (err) {
-        console.error('Query Error:', err.message);
-        response.status(500).json({ error: 'Database query failed' });
-    }
+// update
+app.patch('/update', (request, response) => {
+    const { id, name } = request.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.updateNameById(id, name);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
 });
 
+// delete
+app.delete('/delete/:id', (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
 
-// Read
+    const result = db.deleteRowById(id);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
 
+app.get('/search/:name', (request, response) => {
+    const { name } = request.params;
+    const db = dbService.getDbServiceInstance();
 
-// Update
+    const result = db.searchByName(name);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
 
-
-// Delete
-
-
-
-// Start Express Server
-app.listen(process.env.PORT, () => console.log('Server running on port', process.env.PORT));
+app.listen(process.env.PORT, () => console.log('app is running'));
