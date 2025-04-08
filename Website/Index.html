@@ -8,34 +8,63 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <label>Name:</label>
-        <input type="text" id="name-input">
-        <button id="add-name-btn">Add Name</button>
-
-        <br><br><br>
+    <nav>
         <div>
-           <input placeholder="search by name" id="search-input">
-           <button id="search-btn">Search</button>
+            <h5>Børterud VGS</h5>
         </div>
-
-        <table id="table">
-            <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date Added</th>
-                <th>Delete</th>
-                <th>Edit</th>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-        <section hidden id="update-row">
-            <label>Name:</label>
-            <input type="text" id="update-name-input">
-            <button id="update-row-btn">Update</button>
-        </section>
+        <h6><a href="Pages/kurs/">Kurs</a></h6>
+        <h6><a href="Pages/sporsmal/">Spørsmål</a></h6>
+        <h6><a href="Pages/ansatt/">Ansatt</a></h6>
+    </nav>
+    <main>
+        <img src="Src\Vgs.png">
+        <div class="content-grid">
+            <aside class="left">
+              <h3>Nyheter</h3>
+              <ul>
+                <li>📢 Åpen skolekveld 20. april</li>
+                <li>🎓 Søknadsfrist 1. mars</li>
+                <li>💬 Elevrådsvalg neste uke</li>
+              </ul>
+            </aside>
+            <section class="center">
+              <h2>Velkommen til Børterud VGS</h2>
+              <p>
+                Børterud videregående skole er en inkluderende og samfunnsengasjert skole hvor fellesskap og læring går hånd i hånd. Vi bygger fremtidens Norge – ett skritt, én elev, én mulighet av gangen.
+              </p>
+              <h3>Våre utdanningsprogram</h3>
+              <ul>
+                <li>Studiespesialisering</li>
+                <li>Helse- og oppvekstfag</li>
+                <li>Teknologi og industrifag</li>
+                <li>Elektrofag</li>
+              </ul>
+              <h3>Kveldskurs</h3>
+              <p>Vi tilbyr kveldsundervisning for voksne og ungdom. <a href="Pages/kurs/" class="nav-link">Se kursoversikt</a></p>
+        
+              <h3>Visjon og verdier</h3>
+              <p>Vi står for solidaritet, likhet og åpenhet – med røde verdier og støtte til Alliansen.</p>
+            </section>
+            <aside class="right">
+              <h3>Snarveier</h3>
+              <ul>
+                <li><a href="Pages/kurs/" class="nav-link">📘 Kurs</a></li>
+                <li><a href="Pages/sporsmal/" class="nav-link">❓ Spørsmål</a></li>
+                <li><a href="Pages/ansatt/" class="nav-link">👥 Ansatte</a></li>
+              </ul>
+            </aside>
+          </div>
     </main>
+    <footer>
+        <h4>Kontakt Oss</h4>
+        <ul>
+            <li><a href="">support</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+        </ul>
+    </footer>
     <script src="Script.js"></script>
 </body>
 </html>

@@ -1,72 +1,64 @@
 const express = require('express');
-const app = express();
+const mysql = require('mysql2');
 const cors = require('cors');
-const dotenv = require('dotenv');
-dotenv.config();
+const env = require('dotenv');
 
-const dbService = require('./dbService');
+env.config(); // Load environment variables
 
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended : false }));
 
-
-// create
-app.post('/insert', (request, response) => {
-    const { name } = request.body;
-    const db = dbService.getDbServiceInstance();
-    
-    const result = db.insertNewName(name);
-
-    result
-    .then(data => response.json({ data: data}))
-    .catch(err => console.log(err));
+// MySQL Connection
+const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
-// read
-app.get('/getAll', (request, response) => {
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.getAllData();
-    
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
-// update
-app.patch('/update', (request, response) => {
-    const { id, name } = request.body;
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.updateNameById(id, name);
-    
-    result
-    .then(data => response.json({success : data}))
-    .catch(err => console.log(err));
+db.connect(err => {
+    if (err) {
+        console.error('Database connection failed:', err);
+    } else {
+        console.log('Connected to MySQL database');
+    }
 });
 
-// delete
-app.delete('/delete/:id', (request, response) => {
-    const { id } = request.params;
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.deleteRowById(id);
-    
-    result
-    .then(data => response.json({success : data}))
-    .catch(err => console.log(err));
+// Routes
+app.get('/', (req, res) => {
+    res.send('Node.js, Express, MySQL, and CORS API');
 });
 
-app.get('/search/:name', (request, response) => {
-    const { name } = request.params;
-    const db = dbService.getDbServiceInstance();
+// Get all records
+app.get('/getAll', (req, res) => {
+    db.query('SELECT * FROM people;', (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json(results);
+        console.log(results);
+    });
+});
 
-    const result = db.searchByName(name);
-    
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
+app.get('/test1', (req, res) => {
+    console.log('test 1');
+    res.send('Test 1 endpoint');
+  });
 
-app.listen(process.env.PORT, () => console.log('app is running'));
+
+// Create a record
+app.post('/itemsm', (req, res) => {
+    const { name, description } = req.body;
+    db.query('INSERT INTO people (name, description) VALUES (?, ?)', [name, description], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.json({ id: result.insertId, name, description });
+    });
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
