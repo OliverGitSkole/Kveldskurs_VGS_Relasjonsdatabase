@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const cors = require('cors');
 const env = require('dotenv');
 const path = require('path');
@@ -17,21 +17,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // MySQL Connection
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-});
+let db;
 
-db.connect(err => {
-    if (err) {                                                                                          
-        console.error('Database connection failed:', err);
-    } else {
-        console.log('Connected to MySQL database');
-    }
-});
+(async () => {
+  try {
+    db = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      port: process.env.DB_PORT
+    });
+
+    console.log('Connected to MySQL database');
+  } catch (err) {
+    console.error('Database connection failed:', err);
+  }
+})();
 
 
 // Route for Home page
@@ -62,7 +64,7 @@ app.get('/signin', (req, res) => {
 
 
 // Route for CreateUser page
-app.get('/create_user', (req, res) => {
+app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Login1', 'index.html'));
 });
 
@@ -73,12 +75,41 @@ const  submit_form = async (req, res) => {
 
     console.log('Received login payload:', { name, topic, message });
 
-    res.json({ success: true, message: 'Payload received', data: { name, topic, message } });
+    res.redirect('/sp%C3%B8rsm%C3%A5l');
 };
-
 
 app.post('/submit_form', submit_form);
 
+
+
+const login_auth = async (req, res) => {
+    const { username, password } = req.body;
+  
+    console.log('Received login payload:', { username, password });
+  
+    try {
+      const [rows] = await db.execute(
+        'SELECT * FROM users WHERE username = ? AND password = ?',
+        [username, password]
+      );
+  
+      console.log('Query result:', rows);
+  
+      if (rows.length > 0) {
+        // Login successful
+        res.redirect('/ansatt?login=Successful');
+      } else {
+        // Login failed 
+        res.redirect('/login?login=Invalid+credentials');
+      }
+    } catch (error) {
+      console.error('Database error:', error);
+      res.status(500).send('Internal server error');
+    }
+  };
+  
+  
+  app.post('/login_auth', login_auth);
 
 
 // Start server
