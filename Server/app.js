@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const env = require('dotenv');
+const path = require('path');
 
 env.config(); // Load environment variables
 
@@ -11,6 +12,9 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // MySQL Connection
 const db = mysql.createConnection({
@@ -22,43 +26,63 @@ const db = mysql.createConnection({
 });
 
 db.connect(err => {
-    if (err) {
+    if (err) {                                                                                          
         console.error('Database connection failed:', err);
     } else {
         console.log('Connected to MySQL database');
     }
 });
 
-// Routes
+
+// Route for Home page
 app.get('/', (req, res) => {
-    res.send('Node.js, Express, MySQL, and CORS API');
+    res.sendFile(path.join(__dirname, 'public', 'Home', 'index.html'));
 });
 
-// Get all records
-app.get('/getAll', (req, res) => {
-    db.query('SELECT * FROM people;', (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results);
-        console.log(results);
-    });
+// Route for Course page
+app.get('/kurs', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Course', 'index.html'));
 });
 
-app.get('/test1', (req, res) => {
-    console.log('test 1');
-    res.send('Test 1 endpoint');
-  });
-
-
-// Create a record
-app.post('/itemsm', (req, res) => {
-    const { name, description } = req.body;
-    db.query('INSERT INTO people (name, description) VALUES (?, ?)', [name, description], (err, result) => {
-        if (err) return res.status(500).send(err);
-        res.json({ id: result.insertId, name, description });
-    });
+// Route for Employees page
+app.get('/ansatt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Employees', 'index.html'));
 });
+
+// Route for Question page
+app.get('/sp%C3%B8rsm%C3%A5l', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Question', 'index.html'));
+});
+
+
+// Route for SignIn page
+app.get('/signin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Login1', 'index.html'));
+});
+
+
+// Route for CreateUser page
+app.get('/create_user', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Login1', 'index.html'));
+});
+
+
+
+const  submit_form = async (req, res) => {
+    const { name, topic, message } = req.body;
+
+    console.log('Received login payload:', { name, topic, message });
+
+    res.json({ success: true, message: 'Payload received', data: { name, topic, message } });
+};
+
+
+app.post('/submit_form', submit_form);
+
+
 
 // Start server
 app.listen(port, () => {
+    console.clear()
     console.log(`Server running on http://localhost:${port}`);
 });

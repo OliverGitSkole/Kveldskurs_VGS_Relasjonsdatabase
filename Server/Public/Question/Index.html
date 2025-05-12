@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KveldKurs</title>
+    <link rel="icon" type="image/x-icon" href="Src\KK_icon.png">
+    <link rel="stylesheet" href="/question/style.css">
+</head>
+<body>
+
+    <nav>
+        <div>
+            <button onclick="location.href='/'" class="logo-button">Børterud VGS</button>
+        </div>
+        <button onclick="location.href='/kurs'">Kurs</button>
+        <button onclick="location.href='/spørsmål'">Spørsmål</button>
+        <button onclick="location.href='/ansatt'">Ansatt</button>        
+    </nav>
+
+    <main>
+        <img src="Src\Vgs.png" alt="VGS bilde">
+        <div class="content-wrapper">
+            <div class="info-box">
+                <h2>Send inn spørsmål</h2>
+                <p>Du kan sende inn spørsmål via skjemaet til høyre. <br>
+                    Navn er obligatorisk – hvis du ikke ønsker å oppgi navnet ditt, kan du skrive <strong>"anonym"</strong> i feltet.
+                </p>
+    
+                <section class="faq-section">
+
+                    <h2>Ofte stilte spørsmål</h2>
+
+                    <ul class="faq-container">
+                        <li>
+                            <div class="faq-question">Hvordan kan jeg melde barnet mitt på kurs?
+                                <span class="faq-answer">Du kan ringe til +47 909 78 129, for å melde på kurs</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="faq-question">Hvordan sender jeg inn et spørsmål?
+                                <span class="faq-answer">Fyll ut skjemaet på siden med navn, tema og spørsmålet ditt, og trykk "Send inn".</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="faq-question">Kan jeg være anonym?
+                                <span class="faq-answer">Ja! Skriv "anonym" i navnefeltet hvis du ikke ønsker å oppgi navnet ditt.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="faq-question">Hvor lenge tar det å få svar?
+                                <span class="faq-answer">Vi prøver å svare innen 1–2 virkedager.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+    
+            <form action="/submit_form" method="POST" class="question-form">
+                <label for="name">Navn*</label>
+                <input type="text" id="name" name="name" placeholder="Skriv navnet ditt, eller 'anonym'" required>
+                <label for="topic">Tema*</label>
+                <input type="text" id="topic" name="topic" placeholder="Hva handler spørsmålet om?" required>
+                <label for="message">Spørsmål / Forklaring*</label>
+                <textarea id="message" name="message" rows="6" placeholder="Skriv spørsmålet eller forklaringen din her..." required></textarea>
+                <button type="submit">Send inn</button>
+            </form>
+        </div>
+    </main>
+    
+
+    <footer>
+        <h6>footer</h6>
+    </footer>
+    <script src="/question/Script.js"></script>
+</body>
+</html>
