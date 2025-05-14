@@ -161,4 +161,6 @@ Da blir admin passord og brukernavn slikt:
     INSERT INTO ansatt (UserID, fornavn, etternavn)
     VALUES ('6', 'admin1', 'admin1');
 
+---
+
 
