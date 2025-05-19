@@ -14,16 +14,50 @@
             <button onclick="location.href='/'" class="logo-button">Børterud VGS</button>
         </div>
         <button onclick="location.href='/kurs'">Kurs</button>
-        <button onclick="location.href='/spørsmål'">Spørsmål</button>
+        <button onclick="location.href='          /spørsmål'">Spørsmål</button>
         <button onclick="location.href='/ansatt'">Ansatt</button>        
     </nav>
-
+    
     <main>
-        
+        <section class="create-kurs">
+            <h2>Lag Kurs</h2>
+            <form action="/lag_kurs" method="POST" id="LagKursForm">
+                <input type="text" id="Etternavn" name="Etternavn" placeholder="Lærer Etternavn" required>
+                <input type="number" id="Fag" name="Fag" placeholder="Fag Kode" required>
+                <button type="submit">Opprett Kurs</button>
+            </form>
+            <h3>Slett Kurs</h2>
+            <form action="/slett_kurs" method="POST" id="slettKursForm">
+                <input type="text" id="Etternavn" name="Etternavn" placeholder="Lærer Etternavn" required>
+                <input type="number" id="Fag" name="Fag" placeholder="Fag Kode" required>
+                <button type="submit">Slett Kurs</button>
+            </form>        
+        </section>
+        <section class="lag-elev">
+            <h2>Lag Elev</h2>
+            <form action="/lag_elev" method="POST" id="LagElevForm">
+                <input type="text" id="Fornavn" name="Fornavn" placeholder="Fornavn" required>
+                <input type="text" id="Etternavn" name="Etternavn" placeholder="Etternavn" required>
+                <input type="number" min="10000000" max="99999999" id="Mobil" name="Mobil" placeholder="Foresatt Number" required>
+                <button type="submit">Opprett Elev</button>
+            </form> 
+            <h3>Slett Elev</h2>
+            <form action="/slett_elev" method="POST" id="slettElevForm">
+                <input type="text" id="Fornavn" name="Fornavn" placeholder="Fornavn" required>
+                <input type="number" min="10000000" max="99999999" id="Mobil" name="Mobil" placeholder="Foresatt Number" required>
+                <button type="submit">Slett Elev</button>
+            </form>     
+        </section>
+        <section class="leggtil-elev">
+            <h2>Legg elev til kurs</h2>
+            <form action="/legtil_elev" method="POST" id="LaggtilElevForm">
+                <input type="number" id="Fag" name="Fag" placeholder="Fag kode" required>
+                <input type="text" id="Fornavn" name="Fornavn" placeholder="Fornavn" required>
+                <input type="number" id="Mobil" name="Mobil" placeholder="Foresatt Number" required>
+                <button type="submit">Legg Elev til Kurs</button>
+            </form>    
+        </section>
     </main>
-    <footer>
-        <h6>footer</h6>
-    </footer>
     <script src="/employees_kontor/Script.js"></script>
 </body>
 </html>

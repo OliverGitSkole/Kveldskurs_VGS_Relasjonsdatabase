@@ -129,16 +129,6 @@ main img {
     color: #34495e;
 }
 
-footer {
-    background: #54494B;
-    color: white;
-    height: 60px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
 .login-wrapper {
     max-width: 400px;
     margin: 120px auto 40px;

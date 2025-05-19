@@ -7,7 +7,7 @@ For å ha et sted hvor lærere og kontoransatte kan sette opp kurs,gi karakterer
 ### Node
 Nettsiden bruker node med express og ande pakker for å kjøre
 ##### Pakker:
-	`js`
+	`JS`
     const express = require('express');
     const mysql = require('mysql2/promise');
     const cors = require('cors');
@@ -16,7 +16,7 @@ Nettsiden bruker node med express og ande pakker for å kjøre
     const cookieParser = require('cookie-parser');
     const { permission } = require('process');
 ###### Du kan installere disse med:
-    `node`
+    `NODE`
     npm install express mysql2 cors dotenv path cookie-parser
 
 ---
@@ -74,6 +74,8 @@ Denne nettsiden er lagd slik at det skal virke med andre database systemer men d
 | INT | INT | INT | INT | INT | INT | INT |
 
 #### SQL Tabell Query:
+
+###### Denne Finder du også under Docs/Query.sql
 
     `SQL`
 

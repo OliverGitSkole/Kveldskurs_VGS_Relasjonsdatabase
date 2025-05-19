@@ -71,37 +71,28 @@ main {
 }
 
 main div {
-  margin-top:  200px;
-  margin-left: 40%;
+  max-width: 400px;
+  margin: 120px auto 40px;
+  padding: 30px;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
 }
 
 main div button {
-    background: #16697a;
-    border: none;
-    color: white;
-    font-size: 15px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    padding: 8px 6px;
-    margin-right: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    user-select: none;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #16697a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 main div button:hover {
   background-color: #0d4652;
-}
-
-main div button:active {
-  transform: scale(0.9);
-}
-
-footer {
-    background: #54494B;
-    color: white;
-    height: 60px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
 }

@@ -70,14 +70,68 @@ main {
   display: block;
 }
 
-
-
-footer {
-    background: #54494B;
-    color: white;
-    height: 60px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+main div {
+  max-width: fit-content;
+  margin: 120px auto 40px;
+  padding: 30px;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
 }
+
+main div h2 {
+  margin-bottom: 20px;
+  color: #16697a;
+}
+
+main div table {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f2dbdb;
+
+}
+
+
+main div table, th, td {
+  border-collapse: collapse;
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+main div table td input {
+  width: 4ch;    
+  min-width: 30px;         
+  max-width: 50px;       
+  text-align: center;      
+  padding: 2px 4px;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background-color: white;
+}
+
+main div button {
+  width: 100%;
+  padding: 10px;
+  background-color: #16697a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+main div button:hover {
+  background-color: #0d4652;
+}
+
+main div button:active {
+  transform: scale(0.9);
+}
+

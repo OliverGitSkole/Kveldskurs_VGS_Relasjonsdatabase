@@ -136,20 +136,32 @@ main img {
     margin-bottom: 0.75rem;
   }
 
-footer {
+  footer {
     background: #54494B;
     color: white;
-    height: 60px; 
+    height: auto;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    padding: 1rem;
     width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
 }
 
-footer li i {
-  width: auto;
-  height: 50px;
+.footer-content p {
+    margin: 0.3rem 0;
 }
+
+.footer-content a {
+    color: #FFD700; /* gul lenkefarge for kontrast */
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
 
 @media (max-width: 768px) {
   nav button {
