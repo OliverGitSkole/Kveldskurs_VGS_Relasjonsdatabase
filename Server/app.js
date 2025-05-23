@@ -1,19 +1,24 @@
-// ---------------------------------------------// Requierd Packages // ---------------------------------------------//
+// ---------------------------------------------// Requierd Packages //---------------------------------------------//
 
 const express = require('express');
-const mysql = require('mysql2/promise');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+// ---------------------------------------------// Establishing Global Variables //---------------------------------------------//
+
+const mysql = require('mysql2/promise');
 const env = require('dotenv');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const { permission } = require('process');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
+
+// const { permission } = require('process'); // Not in use??
+
 env.config(); 
 
 
 
-// ---------------------------------------------// Telling App.js to Use these Packages // ---------------------------------------------//
+// ---------------------------------------------// Telling App.js to Use these Packages //---------------------------------------------//
 
 
 
@@ -25,7 +30,7 @@ app.use(cookieParser());
 
 
 
-// ---------------------------------------------// Establishing SQL Connection // ---------------------------------------------//
+// ---------------------------------------------// Establishing SQL Connection //---------------------------------------------//
 
 
 
@@ -49,7 +54,7 @@ let db;
 
 
 
-// ---------------------------------------------// Main Functions // ---------------------------------------------//
+// ---------------------------------------------// Main Functions //---------------------------------------------//
 
 
 
